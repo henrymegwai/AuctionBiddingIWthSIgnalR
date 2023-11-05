@@ -1,4 +1,4 @@
-﻿namespace AuctionBidding.Models
+﻿namespace SharedLibrary.Models
 {
     public class AuctionNotify
     {

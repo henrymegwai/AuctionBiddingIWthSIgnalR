@@ -1,5 +1,6 @@
 using AuctionBidding.Hubs;
 using AuctionBidding.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,11 @@ app.MapControllerRoute(
 app.MapPost("auction/{auctionId}/newbid", (int auctionId, int currentBid, IAuctionRepo auctionRepo) => 
 {
     auctionRepo.NewBid(auctionId, currentBid);
+});
+
+app.MapGet("auctions", (IAuctionRepo auctionRepo) => 
+{
+   return auctionRepo.GetAll();
 });
 
 app.MapHub<AuctionHub>("/auctionhub");

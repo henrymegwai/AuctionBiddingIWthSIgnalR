@@ -1,4 +1,4 @@
-﻿using AuctionBidding.Models;
+﻿using SharedLibrary.Models;
 
 namespace AuctionBidding.Repositories
 {
