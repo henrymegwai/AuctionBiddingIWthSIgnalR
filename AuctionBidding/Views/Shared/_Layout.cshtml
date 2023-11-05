@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Globomantics</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<div class="container">
+    <div class="row mb-1">
+        <div class="col-5">
+            <img asp-append-version="true" alt="Logos" src="img/Globo_logo.png" />
+        </div>
+        <div class="col-7 titlecol">
+            <span class="highlight">An auction for everything</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@RenderSection("scripts", false)
+</body>
+</html>
