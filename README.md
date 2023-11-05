@@ -1,1 +1,1 @@
-# Real time Auction Bidding with >Net Core and SignalR
+# Real-time Auction Bidding with.NetCore and SignalR
