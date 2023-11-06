@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
 using SharedLibrary.Models;
 using System.Net.Http.Json;
 
@@ -24,7 +25,7 @@ var connection = new HubConnectionBuilder().WithUrl("http://localhost:5247/aucti
     option.Transports = HttpTransportType.WebSockets;
     option.SkipNegotiation = true;
 
-}).Build();
+}).AddMessagePackProtocol().Build();
 
 connection.On("ReceiveNewBid", (AuctionNotify auctionNotify) => {
     var auction = auctions.Single(a => a.Id == auctionNotify.AuctionId);
