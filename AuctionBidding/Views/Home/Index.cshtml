@@ -11,6 +11,11 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td><input id="add-itemname" type="text" /></td>
+                    <td><input id="add-currentbid" class="bid-input float-end" type="number" /></td>
+                    <td><button type="button" class="btn btn-primary" onclick="submitAuction()">Add</button></td>
+                </tr>
                 @foreach (var auction in Model)
                 {
                     <tr id="@auction.Id-tr" class="align-middle">
@@ -29,5 +34,6 @@
 
 @section scripts {
     <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr-protocol-msgpack/dist/browser/signalr-protocol-msgpack.min.js"></script>
     <script src="~/js/homeindex.js" asp-append-version="true"></script> 
 }
