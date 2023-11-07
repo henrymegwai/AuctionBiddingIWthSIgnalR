@@ -7,7 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR(o => o.EnableDetailedErrors = true).AddMessagePackProtocol();
+builder.Services.AddSignalR(o =>
+{
+    if (!builder.Environment.IsProduction())
+    {
+        o.EnableDetailedErrors = true;
+    }
+}).AddMessagePackProtocol();
 builder.Services.AddSingleton<IAuctionRepo, AuctionMemoryRepo>();
 
 var app = builder.Build();
@@ -27,20 +33,20 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapPost("auction/{auctionId}/newbid", (int auctionId, int currentBid, IAuctionRepo auctionRepo) => 
+app.MapPost("auction/{auctionId}/newbid", (int auctionId, int currentBid, IAuctionRepo auctionRepo) =>
 {
     auctionRepo.NewBid(auctionId, currentBid);
 });
 
-app.MapPost("auction", async (Auction auction, IAuctionRepo auctionRepo, IHubContext<AuctionHub> hubContext) =>
-{
-    auctionRepo.AddAuction(auction);
-    await hubContext.Clients.All.SendAsync("ReceiveNewAuction", auction);
-});
+//app.MapPost("auction", async (Auction auction, IAuctionRepo auctionRepo, IHubContext<AuctionHub> hubContext) =>
+//{
+//    auctionRepo.AddAuction(auction);
+//    await hubContext.Clients.All.SendAsync("ReceiveNewAuction", auction);
+//});
 
-app.MapGet("/auctions", (IAuctionRepo auctionRepo) => 
+app.MapGet("/auctions", (IAuctionRepo auctionRepo) =>
 {
-   return auctionRepo.GetAll();
+    return auctionRepo.GetAll();
 });
 
 app.MapHub<AuctionHub>("/auctionHub");
