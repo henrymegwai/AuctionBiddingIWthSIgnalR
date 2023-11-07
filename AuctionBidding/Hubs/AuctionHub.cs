@@ -1,11 +1,18 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using AuctionBidding.Models;
 using SharedLibrary.Models;
+using AuctionBidding.Repositories;
 
 namespace AuctionBidding.Hubs
 {
-    public class AuctionHub: Hub
+    public class AuctionHub : Hub
     {
+        private readonly IAuctionRepo auctionRepo;
+
+        public AuctionHub(IAuctionRepo _auctionRepo)
+        {
+            auctionRepo = _auctionRepo;
+        }
         public async Task NotifyNewBid(AuctionNotify auction)
         {
             //regarding groups
@@ -16,6 +23,11 @@ namespace AuctionBidding.Hubs
             await Clients.OthersInGroup(groupName).SendAsync("NotifyOutBid", auction);
 
             await Clients.All.SendAsync("ReceiveNewBid", auction);
+        }
+        public async Task NewAuction(Auction auction)
+        {
+            var newAuction = auctionRepo.AddAuction(auction);
+            await Clients.All.SendAsync("ReceiveNewAuction", newAuction);
         }
 
         //public override Task OnConnectedAsync()

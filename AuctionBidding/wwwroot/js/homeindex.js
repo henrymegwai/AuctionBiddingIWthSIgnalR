@@ -18,7 +18,7 @@
     });
 
     connection.on("ReceiveNewAuction", ({ Id, ItemName, CurrentBid }) => {
-        var tbody = document.querySelector("#table>tbody");
+        var tbody = document.getElementsByClassName(".tbody");
         tbody.innerHTML += `<tr id="${Id}-tr" class="align-middle">
                                 <td>${ItemName}</td >
                                 <td id="${Id}-bidtext" class="bid">${CurrentBid}</td >
@@ -63,11 +63,6 @@ const submitBid = (auctionId) => {
 const submitAuction = () => {
     const itemName = document.getElementById("add-itemname").value;
     const currentBid = document.getElementById("add-currentbid").value;
-    fetch("/auction", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ itemName, currentBid })
-    });
+    connection.invoke("NewAuction", { Id: 0, ItemName: itemName, CurrentBid: parseInt(currentBid) });
+     
 }
