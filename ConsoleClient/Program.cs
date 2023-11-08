@@ -27,6 +27,7 @@ var connection = new HubConnectionBuilder().WithUrl("http://localhost:5247/aucti
 
 }).AddMessagePackProtocol().Build();
 
+
 connection.On("ReceiveNewBid", (AuctionNotify auctionNotify) => {
     var auction = auctions.Single(a => a.Id == auctionNotify.AuctionId);
     auction.CurrentBid = auctionNotify.NewBid;
