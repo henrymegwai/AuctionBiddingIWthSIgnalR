@@ -17,7 +17,7 @@ builder.Services.AddSignalR(o =>
 //Enabling Redis Backplane 
 //.AddStackExchangeRedis("redisconnectionstring here");
 //Because we are now using Azure SignalR service, there won't be need for using redis anymore
-.AddAzureSignalR("azureserviceconnectionstring here")
+.AddAzureSignalR("azureserviceconnectionstring here");
 
 builder.Services.AddSingleton<IAuctionRepo, AuctionMemoryRepo>();
 
